@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ExpenseFlow - Interactive Expense Tracker">
+  <title>ExpenseFlow | Expense Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <a class="brand" href="#"> <span class="logo">E</span> ExpenseFlow</a>
+
+      <p class="nav-label">WORKSPACE</p>
+      <a class="nav-link active" href="#overview">▦ &nbsp; Overview</a>
+      <a class="nav-link" href="#transactions">↔ &nbsp; Transactions</a>
+
+      <div class="sidebar-note">
+        <span>✦</span>
+        <h3>Spend smarter.</h3>
+        <p>Track your expenses and build better financial habits every day.</p>
+      </div>
+
+      <p class="sidebar-footer">● Your data stays in this browser</p>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">PERSONAL FINANCE</p>
+          <h1>Expense Dashboard</h1>
+          <p class="muted">Your spending, organised in one place.</p>
+        </div>
+        <button class="primary" id="addExpenseBtn">＋ Add Expense</button>
+      </header>
+
+      <section class="summary" id="overview">
+        <article class="summary-card">
+          <div class="card-label">Total Expenses <span>₹</span></div>
+          <h2 id="totalAmount">₹0.00</h2>
+          <p class="muted">All saved transactions</p>
+        </article>
+        <article class="summary-card">
+          <div class="card-label">This Month <span>▤</span></div>
+          <h2 id="monthAmount">₹0.00</h2>
+          <p class="muted">Spending this month</p>
+        </article>
+        <article class="summary-card">
+          <div class="card-label">Transactions <span>↗</span></div>
+          <h2 id="transactionCount">0</h2>
+          <p class="muted">Total expense records</p>
+        </article>
+      </section>
+
+      <section class="panel" id="expenseSection">
+        <div class="section-heading">
+          <div>
+            <h2 id="formHeading">Add an Expense</h2>
+            <p class="muted">Enter the details of your transaction.</p>
+          </div>
+          <span class="storage-label">● LocalStorage enabled</span>
+        </div>
+
+        <form id="expenseForm">
+          <input type="hidden" id="expenseId">
+
+          <label>
+            Expense Title
+            <input id="title" type="text" maxlength="70"
+              placeholder="e.g. Monthly groceries" required>
+          </label>
+
+          <label>
+            Amount (₹)
+            <input id="amount" type="number" min="0.01"
+              max="100000000" step="0.01" placeholder="0.00" required>
+          </label>
+
+          <label>
+            Category
+            <select id="category" required>
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Bills">Bills</option>
+              <option value="Health">Health</option>
+              <option value="Education">Education</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+
+          <label>
+            Date
+            <input id="date" type="date" required>
+          </label>
+
+          <div class="form-buttons">
+            <button type="submit" class="primary" id="saveBtn">
+              ＋ Save Expense
+            </button>
+            <button type="button" class="secondary hidden" id="cancelBtn">
+              Cancel
+            </button>
+          </div>
+        </form>
+        <p id="message" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="panel" id="transactions">
+        <div class="section-heading">
+          <div>
+            <h2>Recent Transactions</h2>
+            <p class="muted">Search, filter and manage your expenses.</p>
+          </div>
+          <button class="secondary" id="exportBtn">↓ Export CSV</button>
+        </div>
+
+        <div class="filters">
+          <input type="search" id="search"
+            placeholder="Search expenses..." aria-label="Search expenses">
+
+          <select id="categoryFilter" aria-label="Filter by category">
+            <option value="">All Categories</option>
+            <option>Food</option>
+            <option>Transport</option>
+            <option>Shopping</option>
+            <option>Bills</option>
+            <option>Health</option>
+            <option>Education</option>
+            <option>Entertainment</option>
+            <option>Other</option>
+          </select>
+
+          <label class="filter-date">From
+            <input type="date" id="fromDate">
+          </label>
+
+          <label class="filter-date">To
+            <input type="date" id="toDate">
+          </label>
+
+          <select id="sortBy" aria-label="Sort expenses">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="high">Amount: High to Low</option>
+            <option value="low">Amount: Low to High</option>
+            <option value="title">Title: A–Z</option>
+          </select>
+
+          <button class="text-button" id="clearFilters">Clear Filters</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>EXPENSE</th>
+                <th>CATEGORY</th>
+                <th>DATE</th>
+                <th class="right">AMOUNT</th>
+                <th class="right">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody id="expenseList"></tbody>
+          </table>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon">↗</div>
+          <h3>No expenses found</h3>
+          <p>Add an expense or change your filters to see records.</p>
+        </div>
+
+        <p class="table-footer" id="resultCount">Showing 0 transactions</p>
+      </section>
+
+      <footer>ExpenseFlow · Veda Technology Major Project Task 3</footer>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
